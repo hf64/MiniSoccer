@@ -9,7 +9,7 @@
 
 #include <Servo.h>
 
-#define SERVO_PIN 6
+#define SERVO_PIN 3
 #define POS1 0
 #define POS2 90
 #define DELAY 2000

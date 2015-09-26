@@ -1,6 +1,6 @@
 /* 
  *  main.ino 
- *  Author: Hannes 19/9/2015
+ *  Author: Hannes, Jeremy 25/9/2015
  *  
  *  Main program for the Soccer Mini Project
  */
@@ -10,7 +10,7 @@
 
 #define SERVO1_PIN 5
 #define SERVO2_PIN 6
-#define SERVO3_PIN 
+#define SERVO3_PIN 3
 #define RANDOM_PIN 2
 #define DISTANCE_PIN 0
 #define BUTTON_PIN 9
@@ -19,11 +19,12 @@
 
 #define POS1 0
 #define POS2 90
-#define FEED1 0
-#define FEED2 120
+#define FEED_STOP 66
+#define FEED_FORWARD 0
+#define FEED_REVERSE 180
 #define DELAY_LONG 3000
 #define DELAY_SHORT 300
-#define FEED_DELAY 500
+#define FEED_DELAY 40
 #define MARGIN 5
 
 Servo kicker1;
@@ -35,8 +36,8 @@ void setup() {
   // Setup and initialise the Servo
   kicker1.attach(SERVO1_PIN);
   kicker2.attach(SERVO2_PIN);
-  feed.attach(FEED);
-  feed.write(FEED1);
+  feed.attach(SERVO3_PIN);
+  feed.write(FEED_STOP);
   kicker1.write(POS1);
   // Delay a short bit so that they do not interfere
   delay(100);
@@ -125,9 +126,11 @@ void loop() {
 
   // Open and close the feeding mechanism, dropping one ball into the
   // required position
-  feed.write(FEED2);
+  feed.write(FEED_FORWARD);
   delay(FEED_DELAY);
-  feed.write(FEED1);
+  feed.write(FEED_REVERSE);
+  delay(FEED_DELAY);
+  feed.write(FEED_STOP);
 
   // Choose the correct kicker to activate
   if(count > 0) {
